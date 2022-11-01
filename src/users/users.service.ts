@@ -1,11 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { UserRepository } from 'src/users/user.repository';
+import { PasswordHashService } from 'src/utils/password-hash/password-hash.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly passwordHashService: PasswordHashService,
+  ) {}
+
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return createUserDto;
   }
 
   findAll() {
@@ -17,7 +24,7 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return `This action updates a #${id} user ${updateUserDto.firstName}`;
   }
 
   remove(id: number) {
