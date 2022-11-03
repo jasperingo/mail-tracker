@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AllExceptionFilter } from 'src/utils/filters/all-exception.filter';
 import { validationErrorFactory } from 'src/utils/functions/validation-error-factory.function';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UsersModule } from './users/users.module';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
   ],
   controllers: [],
   providers: [
