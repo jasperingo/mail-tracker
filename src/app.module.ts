@@ -2,6 +2,8 @@ import {
   ClassSerializerInterceptor,
   Module,
   ValidationPipe,
+  NestModule,
+  MiddlewareConsumer,
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR, APP_PIPE, APP_FILTER } from '@nestjs/core';
@@ -10,6 +12,7 @@ import { AllExceptionFilter } from 'src/utils/filters/all-exception.filter';
 import { validationErrorFactory } from 'src/utils/functions/validation-error-factory.function';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { NextFunction, Request, Response } from 'express';
 
 @Module({
   imports: [
@@ -53,4 +56,13 @@ import { AuthModule } from './auth/auth.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply((req: Request, res: Response, next: NextFunction) => {
+        req.data = {} as any;
+        next();
+      })
+      .forRoutes('*');
+  }
+}

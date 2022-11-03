@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { UpdateUserPasswordDto } from 'src/users/dto/update-user-password.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UserRepository } from 'src/users/user.repository';
 import { PasswordHashService } from 'src/utils/password-hash/password-hash.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -47,8 +47,12 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user ${updateUserDto.firstName}`;
+  async update(id: number, updateUserDto: UpdateUserPasswordDto) {
+    const password = await this.passwordHashService.hashPassword(
+      updateUserDto.password,
+    );
+    await this.userRepository.update(id, { password });
+    return this.userRepository.findOneBy({ id });
   }
 
   remove(id: number) {
