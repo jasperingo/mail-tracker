@@ -14,6 +14,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseMapperInterceptor } from 'src/users/interceptors/user-response-mapper.interceptor';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { CreateUserPermissionGuard } from 'src/users/guards/create-user-permission.guard';
 
 @Controller('users')
 @UseInterceptors(UserResponseMapperInterceptor)
@@ -21,7 +22,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, CreateUserPermissionGuard)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
