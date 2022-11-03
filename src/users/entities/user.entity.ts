@@ -28,6 +28,9 @@ export class User {
   @Column()
   matriculationNumber: string;
 
+  @Column()
+  isAdmin: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 }

@@ -16,6 +16,8 @@ export class UserDto {
 
   matriculationNumber: string;
 
+  isAdmin: boolean;
+
   @Type(() => Date)
   createdAt: Date;
 }
