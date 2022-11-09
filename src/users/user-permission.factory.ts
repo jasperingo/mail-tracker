@@ -20,8 +20,12 @@ export class UserPermissionFactory {
       Ability as AbilityClass<AppAbility>,
     );
 
+    can(Action.Read, User);
+
+    can(Action.Update, User, { id: user.id });
+
     if (user.isAdmin) {
-      can(Action.Create, User);
+      can([Action.Create, Action.ReadMany], User);
     }
 
     return build({

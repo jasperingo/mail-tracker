@@ -4,7 +4,6 @@ import {
   Post,
   Body,
   Put,
-  Param,
   UseInterceptors,
   UseGuards,
 } from '@nestjs/common';
@@ -18,6 +17,9 @@ import { UserExistGuard } from 'src/users/guards/user-exist.guard';
 import { User } from 'src/users/entities/user.entity';
 import { DataParam } from 'src/utils/decorators/data-param.decorator';
 import { UserPasswordIsValidPipe } from 'src/users/pipes/user-password-is-valid.pipe';
+import { UpdateUserPasswordPermissionGuard } from 'src/users/guards/update-user-password-permission.guard';
+import { ReadUsersPermissionGuard } from 'src/users/guards/read-users-permission.guard';
+import { ReadUserPermissionGuard } from 'src/users/guards/read-user-permission.guard';
 
 @Controller('users')
 @UseInterceptors(UserResponseMapperInterceptor)
@@ -31,17 +33,19 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, ReadUsersPermissionGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @UseGuards(UserExistGuard, JwtAuthGuard, ReadUserPermissionGuard)
+  findOne(@DataParam('user') user: User) {
+    return user;
   }
 
   @Put(':id/password')
-  @UseGuards(JwtAuthGuard, UserExistGuard)
+  @UseGuards(UserExistGuard, JwtAuthGuard, UpdateUserPasswordPermissionGuard)
   update(
     @DataParam('user') user: User,
     @Body(UserPasswordIsValidPipe) updateUserDto: UpdateUserPasswordDto,
