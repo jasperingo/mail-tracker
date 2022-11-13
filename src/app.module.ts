@@ -14,6 +14,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { NextFunction, Request, Response } from 'express';
 import { RolesModule } from './roles/roles.module';
+import { TemplatesModule } from './templates/templates.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { RolesModule } from './roles/roles.module';
     }),
     AuthModule,
     RolesModule,
+    TemplatesModule,
   ],
   controllers: [],
   providers: [
