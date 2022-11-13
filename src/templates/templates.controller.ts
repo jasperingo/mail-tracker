@@ -6,16 +6,23 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { TemplatesService } from './templates.service';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
+import { TemplatesResponseMapperInterceptor } from 'src/templates/interceptors/templates-response-mapper.interceptor';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { CreateTemplatePermissionGuard } from 'src/templates/guards/create-template-permission.guard';
 
 @Controller('templates')
+@UseInterceptors(TemplatesResponseMapperInterceptor)
 export class TemplatesController {
   constructor(private readonly templatesService: TemplatesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard, CreateTemplatePermissionGuard)
   create(@Body() createTemplateDto: CreateTemplateDto) {
     return this.templatesService.create(createTemplateDto);
   }
