@@ -1,3 +1,4 @@
+import { Letter } from 'src/letters/entities/letter.entity';
 import { TemplateVariable } from 'src/templates/entities/template-variable.entity';
 import {
   Column,
@@ -23,4 +24,7 @@ export class Template {
 
   @OneToMany(() => TemplateVariable, (item) => item.template, { eager: true })
   templateVariables: TemplateVariable[];
+
+  @OneToMany(() => Letter, (letter) => letter.template)
+  letters: Letter[];
 }

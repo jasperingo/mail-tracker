@@ -1,9 +1,11 @@
+import { Recipient } from 'src/letters/entities/recipient.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -23,4 +25,7 @@ export class Role {
 
   @ManyToOne(() => User, (user) => user.roles, { eager: true })
   user: User;
+
+  @OneToMany(() => Recipient, (item) => item.role)
+  recipients: Recipient[];
 }

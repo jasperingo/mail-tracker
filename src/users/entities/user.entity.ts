@@ -1,3 +1,4 @@
+import { Letter } from 'src/letters/entities/letter.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import {
   Column,
@@ -38,4 +39,7 @@ export class User {
 
   @OneToMany(() => Role, (role) => role.user)
   roles: Role[];
+
+  @OneToMany(() => Letter, (letter) => letter.user)
+  letters: Letter[];
 }

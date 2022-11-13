@@ -1,5 +1,12 @@
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { LetterValue } from 'src/letters/entities/letter-value.entity';
 import { Template } from 'src/templates/entities/template.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum TemplateVariableSource {
   INPUT = 'input',
@@ -22,4 +29,7 @@ export class TemplateVariable {
 
   @ManyToOne(() => Template, (template) => template.templateVariables)
   template: Template;
+
+  @OneToMany(() => LetterValue, (item) => item.letter)
+  letterValues: LetterValue[];
 }
