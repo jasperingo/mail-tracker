@@ -13,7 +13,7 @@ export class User {
   id: number;
 
   @Column()
-  title: string;
+  title: string | null;
 
   @Column()
   firstName: string;
@@ -28,7 +28,7 @@ export class User {
   password: string;
 
   @Column()
-  matriculationNumber: string;
+  matriculationNumber: string | null;
 
   @Column()
   isAdmin: boolean;
@@ -36,6 +36,6 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToMany(() => Role, (role) => role.user, { eager: true })
+  @OneToMany(() => Role, (role) => role.user)
   roles: Role[];
 }

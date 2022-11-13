@@ -7,4 +7,17 @@ export class RolesRepository extends Repository<Role> {
   constructor(dataSource: DataSource) {
     super(Role, dataSource.createEntityManager());
   }
+
+  async existsByTitle(title: string) {
+    try {
+      await this.findOneByOrFail({ title });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  findByTitle(title: string) {
+    return this.findOneBy({ title });
+  }
 }

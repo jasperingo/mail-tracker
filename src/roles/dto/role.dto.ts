@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { User } from 'src/users/entities/user.entity';
+import { UserDto } from 'src/users/dto/user.dto';
 
 export class RoleDto {
   id: number;
@@ -12,6 +12,6 @@ export class RoleDto {
   @Type(() => Date)
   createdAt: Date;
 
-  @Type(() => User)
-  user: User;
+  @Type(() => UserDto)
+  user: UserDto;
 }

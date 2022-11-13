@@ -16,11 +16,11 @@ export class Role {
   title: string;
 
   @Column({ type: 'datetime' })
-  endedAt: Date;
+  endedAt: Date | null;
 
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.roles)
+  @ManyToOne(() => User, (user) => user.roles, { eager: true })
   user: User;
 }
