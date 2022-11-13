@@ -21,7 +21,7 @@ export class RolesPermissionFactory {
       Ability as AbilityClass<AppAbility>,
     );
 
-    can(Action.ReadMany, Role);
+    can([Action.ReadMany, Action.Read], Role);
 
     if (user.isAdmin) {
       can(Action.Create, Role);

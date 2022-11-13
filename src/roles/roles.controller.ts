@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Param,
   UseInterceptors,
   UseGuards,
 } from '@nestjs/common';
@@ -13,6 +12,10 @@ import { RolesResponseMapperInterceptor } from 'src/roles/interceptors/roles-res
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { CreateRolePermissionGuard } from 'src/roles/guards/create-role-permission.guard';
 import { ReadRolesPermissionGuard } from 'src/roles/guards/read-roles-permission.guard';
+import { RoleExistGuard } from 'src/roles/guards/role-exist.guard';
+import { ReadRolePermissionGuard } from 'src/roles/guards/read-role-permission.guard';
+import { DataParam } from 'src/utils/decorators/data-param.decorator';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Controller('roles')
 @UseInterceptors(RolesResponseMapperInterceptor)
@@ -32,7 +35,8 @@ export class RolesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.rolesService.findOne(+id);
+  @UseGuards(RoleExistGuard, JwtAuthGuard, ReadRolePermissionGuard)
+  findOne(@DataParam('role') role: Role) {
+    return role;
   }
 }

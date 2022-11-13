@@ -5,19 +5,19 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { UserPermissionFactory } from 'src/users/user-permission.factory';
+import { RolesPermissionFactory } from 'src/roles/roles-permission.factory';
 import { Action } from 'src/utils/action.enum';
 
 @Injectable()
-export class ReadUserPermissionGuard implements CanActivate {
-  constructor(private userPermissionFactory: UserPermissionFactory) {}
+export class ReadRolePermissionGuard implements CanActivate {
+  constructor(private rolePermissionFactory: RolesPermissionFactory) {}
 
   canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<Request>();
 
-    const ability = this.userPermissionFactory.create(req.user);
+    const ability = this.rolePermissionFactory.create(req.user);
 
-    if (ability.can(Action.Read, req.data.user)) {
+    if (ability.can(Action.Read, req.data.role)) {
       return true;
     }
 
