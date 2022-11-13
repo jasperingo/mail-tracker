@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { RolesRepository } from 'src/roles/roles.repository';
 import { UpdateUserPasswordDto } from 'src/users/dto/update-user-password.dto';
 import { User } from 'src/users/entities/user.entity';
 import { UserRepository } from 'src/users/user.repository';
@@ -9,6 +10,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UsersService {
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly rolesRepository: RolesRepository,
     private readonly passwordHashService: PasswordHashService,
   ) {}
 
@@ -55,7 +57,7 @@ export class UsersService {
     return this.userRepository.findOneBy({ id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  findRoles(user: User) {
+    return this.rolesRepository.findBy({ user });
   }
 }

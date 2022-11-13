@@ -52,4 +52,10 @@ export class UsersController {
   ) {
     return this.usersService.update(user.id, updateUserDto);
   }
+
+  @Get(':id/roles')
+  @UseGuards(UserExistGuard, JwtAuthGuard, ReadUserPermissionGuard)
+  findRoles(@DataParam('user') user: User) {
+    return this.usersService.findRoles(user);
+  }
 }

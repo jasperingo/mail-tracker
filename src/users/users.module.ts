@@ -6,9 +6,10 @@ import { User } from 'src/users/entities/user.entity';
 import { PasswordHashService } from 'src/utils/password-hash/password-hash.service';
 import { UserRepository } from 'src/users/user.repository';
 import { UserPermissionFactory } from 'src/users/user-permission.factory';
+import { RolesModule } from 'src/roles/roles.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), RolesModule],
   controllers: [UsersController],
   providers: [
     UsersService,
