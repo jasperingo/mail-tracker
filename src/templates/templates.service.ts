@@ -1,14 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { TemplateVariable } from 'src/templates/entities/template-variable.entity';
+import { Template } from 'src/templates/entities/template.entity';
+import { TemplateVariablesRepository } from 'src/templates/template-variables.repository';
 import { TemplatesRepository } from 'src/templates/templates.repository';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
 
 @Injectable()
 export class TemplatesService {
-  constructor(private readonly templatesRepository: TemplatesRepository) {}
+  constructor(
+    private readonly templatesRepository: TemplatesRepository,
+    private readonly templateVariablesRepository: TemplateVariablesRepository,
+  ) {}
 
-  create(createTemplateDto: CreateTemplateDto) {
-    return 'This action adds a new template';
+  async create(createTemplateDto: CreateTemplateDto) {
+    const template = new Template();
+    template.title = createTemplateDto.title;
+    template.content = createTemplateDto.content;
+
+    const result = await this.templatesRepository.save(template);
+
+    await this.templateVariablesRepository.save(
+      createTemplateDto.templateVariables.map((item) => {
+        const variable = new TemplateVariable();
+        variable.name = item.name;
+        variable.source = item.source;
+        variable.template = result;
+        variable.databaseField = item.databaseField;
+        return variable;
+      }),
+    );
+
+    return this.templatesRepository.findBy({ id: result.id });
   }
 
   findAll() {
