@@ -20,4 +20,8 @@ export class RolesRepository extends Repository<Role> {
   findByTitle(title: string) {
     return this.findOneBy({ title });
   }
+
+  findLastByTitle(title: string) {
+    return this.findOne({ where: { title }, order: { createdAt: 'DESC' } });
+  }
 }

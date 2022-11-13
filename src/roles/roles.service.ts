@@ -10,13 +10,13 @@ export class RolesService {
   constructor(private readonly roleRepository: RolesRepository) {}
 
   async create(createRoleDto: CreateRoleDto) {
-    const existingRole = await this.roleRepository.findByTitle(
+    const existingRole = await this.roleRepository.findLastByTitle(
       createRoleDto.title,
     );
 
     if (existingRole !== null) {
       existingRole.endedAt = new Date();
-      this.roleRepository.save(existingRole);
+      await this.roleRepository.save(existingRole);
     }
 
     const role = new Role();
