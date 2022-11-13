@@ -5,23 +5,23 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { RolesService } from 'src/roles/roles.service';
+import { TemplatesService } from 'src/templates/templates.service';
 
 @Injectable()
-export class RoleExistGuard implements CanActivate {
-  constructor(private readonly roleService: RolesService) {}
+export class TemplateExistGuard implements CanActivate {
+  constructor(private readonly templateService: TemplatesService) {}
 
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<Request>();
-    const roleId = Number(req.params.id);
+    const templateId = Number(req.params.id);
 
-    if (isNaN(roleId)) {
+    if (isNaN(templateId)) {
       throw new NotFoundException();
     }
 
-    req.data.role = await this.roleService.findOne(roleId);
+    req.data.template = await this.templateService.findOne(templateId);
 
-    if (req.data.role !== null) {
+    if (req.data.template !== null) {
       return true;
     } else {
       throw new NotFoundException();

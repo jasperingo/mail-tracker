@@ -39,7 +39,7 @@ export class TemplatesService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} template`;
+    return this.templatesRepository.findOneBy({ id });
   }
 
   update(id: number, updateTemplateDto: UpdateTemplateDto) {
