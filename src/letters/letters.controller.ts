@@ -6,16 +6,23 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { LettersService } from './letters.service';
 import { CreateLetterDto } from './dto/create-letter.dto';
 import { UpdateLetterDto } from './dto/update-letter.dto';
+import { LetterResponseMapperInterceptor } from 'src/letters/interceptors/letter-response-mapper.interceptor';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { CreateLetterPermissionGuard } from 'src/letters/guards/create-letter-permission.guard';
 
 @Controller('letters')
+@UseInterceptors(LetterResponseMapperInterceptor)
 export class LettersController {
   constructor(private readonly lettersService: LettersService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard, CreateLetterPermissionGuard)
   create(@Body() createLetterDto: CreateLetterDto) {
     return this.lettersService.create(createLetterDto);
   }
