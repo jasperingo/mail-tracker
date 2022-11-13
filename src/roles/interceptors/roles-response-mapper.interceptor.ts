@@ -5,18 +5,18 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { map, Observable } from 'rxjs';
-import { UserDto } from 'src/users/dto/user.dto';
+import { Observable, map } from 'rxjs';
+import { RoleDto } from 'src/roles/dto/role.dto';
 
 @Injectable()
-export class UserResponseMapperInterceptor implements NestInterceptor {
+export class RolesResponseMapperInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Observable<UserDto | UserDto[]> {
+  ): Observable<RoleDto | RoleDto[]> {
     return next.handle().pipe(
       map((res) =>
-        plainToInstance(UserDto, res, {
+        plainToInstance(RoleDto, res, {
           enableCircularCheck: true,
         }),
       ),

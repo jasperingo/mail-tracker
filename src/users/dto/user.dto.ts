@@ -1,4 +1,5 @@
 import { Type, Exclude } from 'class-transformer';
+import { Role } from 'src/roles/entities/role.entity';
 
 export class UserDto {
   id: number;
@@ -17,6 +18,9 @@ export class UserDto {
   matriculationNumber: string;
 
   isAdmin: boolean;
+
+  @Type(() => Role)
+  roles: Role[];
 
   @Type(() => Date)
   createdAt: Date;

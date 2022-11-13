@@ -13,6 +13,7 @@ import { validationErrorFactory } from 'src/utils/functions/validation-error-fac
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { NextFunction, Request, Response } from 'express';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { NextFunction, Request, Response } from 'express';
       inject: [ConfigService],
     }),
     AuthModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [

@@ -1,7 +1,9 @@
+import { Role } from 'src/roles/entities/role.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -33,4 +35,7 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => Role, (role) => role.user, { eager: true })
+  roles: Role[];
 }
