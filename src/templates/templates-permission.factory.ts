@@ -23,7 +23,7 @@ export class TemplatesPermissionFactory {
 
     can([Action.ReadMany, Action.Read], Template);
 
-    if (user.isAdmin) {
+    if (user?.isAdmin) {
       can([Action.Create, Action.Update], Template);
     }
 

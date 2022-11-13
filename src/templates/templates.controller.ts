@@ -15,6 +15,7 @@ import { UpdateTemplateDto } from './dto/update-template.dto';
 import { TemplatesResponseMapperInterceptor } from 'src/templates/interceptors/templates-response-mapper.interceptor';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { CreateTemplatePermissionGuard } from 'src/templates/guards/create-template-permission.guard';
+import { ReadTemplatesPermissionGuard } from 'src/templates/guards/read-templates-permission.guard';
 
 @Controller('templates')
 @UseInterceptors(TemplatesResponseMapperInterceptor)
@@ -28,6 +29,7 @@ export class TemplatesController {
   }
 
   @Get()
+  @UseGuards(ReadTemplatesPermissionGuard)
   findAll() {
     return this.templatesService.findAll();
   }

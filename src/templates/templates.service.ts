@@ -35,7 +35,7 @@ export class TemplatesService {
   }
 
   findAll() {
-    return `This action returns all templates`;
+    return this.templatesRepository.find();
   }
 
   findOne(id: number) {
