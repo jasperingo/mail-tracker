@@ -28,7 +28,7 @@ export class LettersPermissionFactory {
     });
 
     if (user?.isAdmin) {
-      can(Action.ReadMany, Letter);
+      can([Action.ReadMany, Action.Read], Letter);
     }
 
     return build({
