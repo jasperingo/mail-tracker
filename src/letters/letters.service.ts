@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { LetterValuesRepository } from 'src/letters/letter-values.repository';
+import { LettersRepository } from 'src/letters/letters.repository';
+import { RecipientsRepository } from 'src/letters/recipients.repository';
 import { CreateLetterDto } from './dto/create-letter.dto';
-import { UpdateLetterDto } from './dto/update-letter.dto';
 
 @Injectable()
 export class LettersService {
+  constructor(
+    private readonly lettersRepository: LettersRepository,
+    private readonly letterValuesRepository: LetterValuesRepository,
+    private readonly recipientsRepository: RecipientsRepository,
+  ) {}
+
   create(createLetterDto: CreateLetterDto) {
+
+    
+
     return 'This action adds a new letter';
   }
 
   findAll() {
-    return `This action returns all letters`;
+    return this.lettersRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} letter`;
-  }
-
-  update(id: number, updateLetterDto: UpdateLetterDto) {
-    return `This action updates a #${id} letter`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} letter`;
+    return this.lettersRepository.findOneBy({ id });
   }
 }

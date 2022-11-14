@@ -9,9 +9,13 @@ import { LettersPermissionFactory } from 'src/letters/letters-permission.factory
 import { LettersRepository } from 'src/letters/letters.repository';
 import { LetterValuesRepository } from 'src/letters/letter-values.repository';
 import { RecipientsRepository } from 'src/letters/recipients.repository';
+import { TemplatesModule } from 'src/templates/templates.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Letter, LetterValue, Recipient])],
+  imports: [
+    TypeOrmModule.forFeature([Letter, LetterValue, Recipient]),
+    TemplatesModule,
+  ],
   controllers: [LettersController],
   providers: [
     LettersService,

@@ -21,5 +21,6 @@ import { IsTemplateIdPipe } from 'src/templates/pipes/is-template-id.pipe';
     TemplateVariablesRepository,
     TemplatesPermissionFactory,
   ],
+  exports: [TemplatesRepository, TemplateVariablesRepository],
 })
 export class TemplatesModule {}
