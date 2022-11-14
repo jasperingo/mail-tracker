@@ -27,7 +27,7 @@ export class RolesService {
 
     const result = await this.roleRepository.save(role);
 
-    return this.roleRepository.findOneBy({ id: result.id });
+    return this.findOne(result.id);
   }
 
   findAll() {

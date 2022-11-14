@@ -31,7 +31,7 @@ export class TemplatesService {
       }),
     );
 
-    return this.templatesRepository.findBy({ id: result.id });
+    return this.findOne(result.id);
   }
 
   findAll() {
