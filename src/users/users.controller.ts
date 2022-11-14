@@ -20,6 +20,7 @@ import { UserPasswordIsValidPipe } from 'src/users/pipes/user-password-is-valid.
 import { UpdateUserPasswordPermissionGuard } from 'src/users/guards/update-user-password-permission.guard';
 import { ReadUsersPermissionGuard } from 'src/users/guards/read-users-permission.guard';
 import { ReadUserPermissionGuard } from 'src/users/guards/read-user-permission.guard';
+import { ReadUserLettersPermissionGuard } from 'src/users/guards/read-user-letters-permission.guard';
 
 @Controller('users')
 @UseInterceptors(UserResponseMapperInterceptor)
@@ -57,5 +58,11 @@ export class UsersController {
   @UseGuards(UserExistGuard, JwtAuthGuard, ReadUserPermissionGuard)
   findRoles(@DataParam('user') user: User) {
     return this.usersService.findRoles(user);
+  }
+
+  @Get(':id/Letters')
+  @UseGuards(UserExistGuard, JwtAuthGuard, ReadUserLettersPermissionGuard)
+  findLetters(@DataParam('user') user: User) {
+    return this.usersService.findLetters(user);
   }
 }

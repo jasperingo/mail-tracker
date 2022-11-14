@@ -24,5 +24,6 @@ import { TemplatesModule } from 'src/templates/templates.module';
     RecipientsRepository,
     LettersPermissionFactory,
   ],
+  exports: [LettersRepository, LettersService],
 })
 export class LettersModule {}
