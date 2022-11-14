@@ -7,6 +7,9 @@ import {
   Min,
   ValidateNested,
 } from 'class-validator';
+import { IsRoleId } from 'src/roles/pipes/is-role-id.pipe';
+import { IsTemplateId } from 'src/templates/pipes/is-template-id.pipe';
+import { IsTemplateVariableId } from 'src/templates/pipes/is-template-variable-id.pipe';
 
 export class CreateRecipientDto {
   @Min(0)
@@ -14,6 +17,7 @@ export class CreateRecipientDto {
   @IsNotEmpty()
   level: number;
 
+  @IsRoleId()
   @Min(1)
   @IsNumber()
   @IsNotEmpty()
@@ -24,6 +28,7 @@ export class CreateLetterValueDto {
   @IsNotEmpty()
   value: string;
 
+  @IsTemplateVariableId()
   @Min(1)
   @IsNumber()
   @IsNotEmpty()
@@ -31,6 +36,7 @@ export class CreateLetterValueDto {
 }
 
 export class CreateLetterDto {
+  @IsTemplateId()
   @Min(1)
   @IsNumber()
   @IsNotEmpty()
