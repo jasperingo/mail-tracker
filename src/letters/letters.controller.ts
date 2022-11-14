@@ -29,7 +29,7 @@ export class LettersController {
     @Body(RecipientsIsValidPipe, LetterValuesIsValidPipe)
     createLetterDto: CreateLetterDto,
   ) {
-    return this.lettersService.create(createLetterDto);
+    return this.lettersService.create(user, createLetterDto);
   }
 
   @Get()
