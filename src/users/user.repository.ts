@@ -8,6 +8,15 @@ export class UserRepository extends Repository<User> {
     super(User, dataSource.createEntityManager());
   }
 
+  async existsById(id: number) {
+    try {
+      await this.findOneByOrFail({ id });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   async existsByEmail(email: string) {
     try {
       await this.findOneByOrFail({ email });

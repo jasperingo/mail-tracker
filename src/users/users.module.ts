@@ -7,12 +7,14 @@ import { PasswordHashService } from 'src/utils/password-hash/password-hash.servi
 import { UserRepository } from 'src/users/user.repository';
 import { UserPermissionFactory } from 'src/users/user-permission.factory';
 import { RolesModule } from 'src/roles/roles.module';
+import { IsUserIdPipe } from 'src/users/pipes/is-user-id.pipe';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), RolesModule],
   controllers: [UsersController],
   providers: [
     UsersService,
+    IsUserIdPipe,
     UserRepository,
     PasswordHashService,
     UserPermissionFactory,
