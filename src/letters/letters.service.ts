@@ -76,6 +76,15 @@ export class LettersService {
     return letter;
   }
 
+  async updateRecipientSignedAt(user: User, letter: Letter) {
+    const recipient = letter.recipients.find((r) => r.role.user.id === user.id);
+    recipient.signedAt = new Date();
+
+    await this.recipientsRepository.save(recipient);
+
+    return this.findOne(letter.id);
+  }
+
   template(letter: Letter) {
     const data: any = {};
 

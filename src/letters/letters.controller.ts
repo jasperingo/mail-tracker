@@ -1,9 +1,9 @@
 import {
   Controller,
   Get,
+  Put,
   Post,
   Body,
-  Param,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -19,6 +19,9 @@ import { User } from 'src/users/entities/user.entity';
 import { ReadLettersPermissionGuard } from 'src/letters/guards/read-letters-permission.guard';
 import { LetterExistGuard } from 'src/letters/guards/letter-exist.guard';
 import { ReadLetterPermissionGuard } from 'src/letters/guards/read-letter-permission.guard';
+import { DataParam } from 'src/utils/decorators/data-param.decorator';
+import { Letter } from 'src/letters/entities/letter.entity';
+import { SignLetterPermissionGuard } from 'src/letters/guards/sign-letter-permission.guard';
 
 @Controller('letters')
 @UseInterceptors(LetterResponseMapperInterceptor)
@@ -43,7 +46,16 @@ export class LettersController {
 
   @Get(':id')
   @UseGuards(LetterExistGuard, JwtAuthGuard, ReadLetterPermissionGuard)
-  findOne(@Param('id') id: string) {
-    return this.lettersService.findOne(+id);
+  findOne(@DataParam('letter') letter: Letter) {
+    return letter;
+  }
+
+  @Put(':id/sign')
+  @UseGuards(LetterExistGuard, JwtAuthGuard, SignLetterPermissionGuard)
+  updateRecipientSignedAt(
+    @UserParam() user: User,
+    @DataParam('letter') letter: Letter,
+  ) {
+    return this.lettersService.updateRecipientSignedAt(user, letter);
   }
 }

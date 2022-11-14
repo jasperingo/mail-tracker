@@ -11,7 +11,7 @@ export class Recipient {
   level: number;
 
   @Column({ type: 'datetime' })
-  signedAt: Date;
+  signedAt: Date | null;
 
   @ManyToOne(() => Letter, (letter) => letter.recipients)
   letter: Letter;

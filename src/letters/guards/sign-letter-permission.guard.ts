@@ -5,23 +5,21 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { LettersPermissionFactory } from 'src/letters/letters-permission.factory';
-import { Action } from 'src/utils/action.enum';
 
 @Injectable()
-export class ReadLetterPermissionGuard implements CanActivate {
-  constructor(private letterPermissionFactory: LettersPermissionFactory) {}
-
+export class SignLetterPermissionGuard implements CanActivate {
   canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<Request>();
-
-    const ability = this.letterPermissionFactory.create(req.user);
 
     const recipient = req.data.letter.recipients.find(
       (r) => r.role.user.id === req.user.id,
     );
 
-    if (ability.can(Action.Read, req.data.letter) || recipient !== undefined) {
+    if (
+      recipient !== undefined &&
+      (recipient.level === 0 ||
+        req.data.letter.recipients[recipient.level - 1].signedAt !== null)
+    ) {
       return true;
     }
 
