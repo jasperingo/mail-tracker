@@ -16,6 +16,7 @@ import { RecipientsIsValidPipe } from 'src/letters/pipes/recipients-is-valid.pip
 import { LetterValuesIsValidPipe } from 'src/letters/pipes/letter-values-is-valid.pipe';
 import { UserParam } from 'src/utils/decorators/user-param.decorator';
 import { User } from 'src/users/entities/user.entity';
+import { ReadLettersPermissionGuard } from 'src/letters/guards/read-letters-permission.guard';
 
 @Controller('letters')
 @UseInterceptors(LetterResponseMapperInterceptor)
@@ -33,6 +34,7 @@ export class LettersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, ReadLettersPermissionGuard)
   findAll() {
     return this.lettersService.findAll();
   }

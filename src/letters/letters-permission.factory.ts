@@ -23,11 +23,13 @@ export class LettersPermissionFactory {
 
     can(Action.Create, Letter);
 
-    can<Letter & { 'user.id': Letter['user']['id'] }>(
-      [Action.ReadMany, Action.Read],
-      Letter,
-      { 'user.id': user.id },
-    );
+    can<Letter & { 'user.id': Letter['user']['id'] }>(Action.Read, Letter, {
+      'user.id': user.id,
+    });
+
+    if (user?.isAdmin) {
+      can(Action.ReadMany, Letter);
+    }
 
     return build({
       detectSubjectType: (item) =>
