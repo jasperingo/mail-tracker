@@ -98,6 +98,29 @@ export class LettersService {
       }
     }
 
-    return ejs.render(letter.template.content, data);
+    const recipients = letter.recipients
+      .filter((r) => r.signedAt !== null)
+      .sort((first, second) => {
+        if (first.letter < second.letter) {
+          return -1;
+        }
+
+        if (first.letter > second.letter) {
+          return 1;
+        }
+
+        return 0;
+      })
+      .map(
+        (r) => `<p>
+          <div>${r.role.user.firstName} ${r.role.user.lastName}</div> 
+          <div>${r.role.title}</div> 
+          <div>${r.signedAt}</div>
+        </p>`,
+      );
+
+    const message = ejs.render(letter.template.content, data);
+
+    return `<div>${message} ${recipients}</div>`;
   }
 }

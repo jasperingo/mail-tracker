@@ -6,7 +6,12 @@ import {
   Body,
   UseGuards,
   UseInterceptors,
+  Res,
+  Header,
 } from '@nestjs/common';
+import * as pdf from 'phantom-html-to-pdf';
+import { promisify } from 'util';
+import { Response } from 'express';
 import { LettersService } from './letters.service';
 import { CreateLetterDto } from './dto/create-letter.dto';
 import { LetterResponseMapperInterceptor } from 'src/letters/interceptors/letter-response-mapper.interceptor';
@@ -57,5 +62,20 @@ export class LettersController {
     @DataParam('letter') letter: Letter,
   ) {
     return this.lettersService.updateRecipientSignedAt(user, letter);
+  }
+
+  @Get(':id/download')
+  @Header('Content-Type', 'application/pdf')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="mail-tracker-letter.pdf"',
+  )
+  @UseGuards(LetterExistGuard, JwtAuthGuard, ReadLetterPermissionGuard)
+  async downloadOne(@DataParam('letter') letter: Letter, @Res() res: Response) {
+    const file = await promisify(pdf())({
+      html: `<body>${letter.template.content}</body>`,
+    });
+
+    file.stream.pipe(res);
   }
 }
