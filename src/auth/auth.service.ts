@@ -24,7 +24,7 @@ export class AuthService {
   createJWT(user: User) {
     return {
       userId: user.id,
-      access_token: this.jwtService.sign({ sub: user.id }),
+      accessToken: this.jwtService.sign({ sub: user.id }),
     };
   }
 }
