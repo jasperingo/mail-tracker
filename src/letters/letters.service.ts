@@ -30,6 +30,7 @@ export class LettersService {
     const letter = new Letter();
     letter.user = user;
     letter.template = template;
+    letter.title = createLetterDto.title;
 
     const result = await this.lettersRepository.save(letter);
 

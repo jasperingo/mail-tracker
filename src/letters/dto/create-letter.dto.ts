@@ -4,6 +4,7 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsString,
   Min,
   ValidateNested,
 } from 'class-validator';
@@ -36,6 +37,10 @@ export class CreateLetterValueDto {
 }
 
 export class CreateLetterDto {
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
   @IsTemplateId()
   @Min(1)
   @IsNumber()

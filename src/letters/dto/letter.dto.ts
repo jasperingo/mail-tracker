@@ -7,6 +7,8 @@ import { UserDto } from 'src/users/dto/user.dto';
 export class LetterDto {
   id: number;
 
+  title: string;
+
   @Type(() => Date)
   createdAt: Date;
 

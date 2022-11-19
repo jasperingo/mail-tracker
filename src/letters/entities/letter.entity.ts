@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -14,6 +15,9 @@ import { Recipient } from 'src/letters/entities/recipient.entity';
 export class Letter {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  title: string;
 
   @CreateDateColumn()
   createdAt: Date;
