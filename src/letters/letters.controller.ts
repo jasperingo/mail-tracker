@@ -73,7 +73,12 @@ export class LettersController {
   @UseGuards(LetterExistGuard, JwtAuthGuard, ReadLetterPermissionGuard)
   async downloadOne(@DataParam('letter') letter: Letter, @Res() res: Response) {
     const file = await promisify(pdf())({
-      html: `<body>${letter.template.content}</body>`,
+      html: `
+        <body>
+          <h1 style="font-style: bold; margin-bottom: 16px;">${letter.title}</h1> 
+          ${letter.template.content}
+        </body>
+      `,
     });
 
     file.stream.pipe(res);

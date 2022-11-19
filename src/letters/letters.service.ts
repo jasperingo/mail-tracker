@@ -113,7 +113,8 @@ export class LettersService {
         return 0;
       })
       .map(
-        (r) => `<p>
+        (r) => `<p style=" margin-top: 20px;">
+          <b>Signature</b>
           <div>${r.role.user.firstName} ${r.role.user.lastName}</div> 
           <div>${r.role.title}</div> 
           <div>${r.signedAt}</div>
